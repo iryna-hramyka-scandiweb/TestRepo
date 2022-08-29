@@ -29,38 +29,79 @@ use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 
 class AddProductPatch implements DataPatchInterface
 {
+    /**
+     * @var ModuleDataSetupInterface $setup
+     */
     protected ModuleDataSetupInterface $setup;
 
+    /**
+     * @var ProductInterfaceFactory $productInterfaceFactory
+     */
     protected ProductInterfaceFactory $productInterfaceFactory;
 
+    /**
+     * @var ProductRepositoryInterface $productRepository
+     */
     protected ProductRepositoryInterface $productRepository;
 
+    /**
+     * @var State $appState
+     */
     protected State $appState;
 
+    /**
+     * @var EavSetup $eavSetup
+     */
     protected EavSetup $eavSetup;
 
+    /**
+     * @var StoreManagerInterface $storeManager
+     */
     protected StoreManagerInterface $storeManager;
 
+    /**
+     * @var SourceItemInterfaceFactory $sourceItemFactory
+     */
     protected SourceItemInterfaceFactory $sourceItemFactory;
 
+    /**
+     * @var SourceItemsSaveInterface $sourceItemsSaveInterface
+     */
     protected SourceItemsSaveInterface $sourceItemsSaveInterface;
 
+    /**
+     * @var CategoryLinkManagementInterface $categoryLink
+     */
     protected CategoryLinkManagementInterface $categoryLink;
 
+    /**
+     * @var array $sourceItems
+     */
     protected array $sourceItems = [];
 
+    /**
+     * @param ModuleDataSetupInterface $setup
+     * @param ProductInterfaceFactory $productInterfaceFactory
+     * @param ProductRepositoryInterface $productRepository
+     * @param State $appState
+     * @param StoreManagerInterface $storeManager
+     * @param EavSetup $eavSetup
+     * @param SourceItemInterfaceFactory $sourceItemFactory
+     * @param SourceItemsSaveInterface $sourceItemsSaveInterface
+     * @param CategoryLinkManagementInterface $categoryLink
+     * @return void
+     */
     public function __construct(
-        ModuleDataSetupInterface        $setup,
-        ProductInterfaceFactory         $productInterfaceFactory,
-        ProductRepositoryInterface      $productRepository,
-        State                           $appState,
-        StoreManagerInterface           $storeManager,
-        EavSetup                        $eavSetup,
-        SourceItemInterfaceFactory      $sourceItemFactory,
-        SourceItemsSaveInterface        $sourceItemsSaveInterface,
+        ModuleDataSetupInterface $setup,
+        ProductInterfaceFactory $productInterfaceFactory,
+        ProductRepositoryInterface $productRepository,
+        State $appState,
+        StoreManagerInterface $storeManager,
+        EavSetup $eavSetup,
+        SourceItemInterfaceFactory $sourceItemFactory,
+        SourceItemsSaveInterface $sourceItemsSaveInterface,
         CategoryLinkManagementInterface $categoryLink
-    )
-    {
+    ) {
         $this->appState = $appState;
         $this->productInterfaceFactory = $productInterfaceFactory;
         $this->productRepository = $productRepository;
@@ -73,21 +114,23 @@ class AddProductPatch implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return $this
      * @throws Exception
      */
-    public function apply()
+    public function apply(): AddProductPatch
     {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
+        return $this;
     }
 
     /**
-     * @throws ValidationException
+     * @return void
      * @throws NoSuchEntityException
      * @throws CouldNotSaveException
      * @throws StateException
      * @throws LocalizedException
      * @throws InputException
+     * @throws ValidationException
      */
     public function execute(): void
     {
@@ -120,7 +163,7 @@ class AddProductPatch implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array|string[]
      */
     public static function getDependencies(): array
     {
@@ -128,7 +171,7 @@ class AddProductPatch implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array|string[]
      */
     public function getAliases(): array
     {
