@@ -114,13 +114,12 @@ class AddProductPatch implements DataPatchInterface
     }
 
     /**
-     * @return $this
+     * @return void
      * @throws Exception
      */
-    public function apply(): AddProductPatch
+    public function apply(): void
     {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
-        return $this;
     }
 
     /**
